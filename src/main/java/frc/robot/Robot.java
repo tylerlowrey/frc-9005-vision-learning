@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.networking.RunnableUdpPacketReceiver;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,14 +22,15 @@ public class Robot extends TimedRobot {
 
   public static AtomicInteger aprilTagId = new AtomicInteger();
   public static AtomicBoolean isAprilTagDetected = new AtomicBoolean();
-  
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
-
+    Thread udpPacketReceiverThread = new Thread(new RunnableUdpPacketReceiver(5808));
+    udpPacketReceiverThread.start();
   }
 
   /**
