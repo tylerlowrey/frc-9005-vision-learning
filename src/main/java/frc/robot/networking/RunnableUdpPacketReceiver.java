@@ -1,8 +1,5 @@
 package frc.robot.networking;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Robot;
 
 import java.net.DatagramPacket;

@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.networking.RunnableUdpPacketReceiver;
@@ -23,6 +26,11 @@ public class Robot extends TimedRobot {
   public static AtomicInteger aprilTagId = new AtomicInteger();
   public static AtomicBoolean isAprilTagDetected = new AtomicBoolean();
 
+  private ShuffleboardTab visionShuffleboardTab;
+  private GenericEntry aprilTagIdEntry;
+  private GenericEntry isAprilTagDetectedEntry;
+
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -31,6 +39,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     Thread udpPacketReceiverThread = new Thread(new RunnableUdpPacketReceiver(5808));
     udpPacketReceiverThread.start();
+    visionShuffleboardTab = Shuffleboard.getTab("Vision");
+    aprilTagIdEntry =  visionShuffleboardTab.add("AprilTag ID", 0).getEntry();
+    isAprilTagDetectedEntry = visionShuffleboardTab.add("Is AprilTag Detected", false).getEntry();
   }
 
   /**
@@ -42,7 +53,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-
+    aprilTagIdEntry.setInteger(aprilTagId.get());
+    isAprilTagDetectedEntry.setBoolean(isAprilTagDetected.get());
   }
 
   /**
